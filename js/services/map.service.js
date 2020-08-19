@@ -1,18 +1,20 @@
+import { storServie } from './storage.service.js'
 
 export const mapService = {
     connectGoogleApi,
-    getCurrPos
+    addLocation,
+    deleteLoc,
+    getLocations,
+    getDefPos
 }
 
 const DEFAULT_LAT = 29.55805;
 const DEFAULT_LNG = 34.94821;
 const LOCS_KEY = "LOCATIONS";
+var locations = storServie.loadFromStorage(LOCS_KEY);
+_addDefaultLoc();
 
 
-
-function getCurrPos() {
-    return gCurrPoss;
-}
 
 function connectGoogleApi() {
     if (window.google) return Promise.resolve()
@@ -28,55 +30,61 @@ function connectGoogleApi() {
     })
 }
 
+function addLocation(pos, name) {
+    const location = {
+        id: _makeId(),
+        pos: {
+            lat: parseFloat(pos.lat).toFixed(4),
+            lng: parseFloat(pos.lng).toFixed(4)
+        },
+        name: name,
+        createdAt: new Date(Date.now()).toLocaleString()
+    }
+    locations.push(location);
+    _saveLocations();
+}
 
 
-// 'use strict';
+function _addDefaultLoc() {
+    if (!locations) {
+        let defLoc = {
+            id: _makeId(),
+            pos: {
+                lat: DEFAULT_LAT,
+                lng: DEFAULT_LNG
+            },
+            name: 'EYLAT',
+            createdAt: new Date(Date.now()).toLocaleString()
+        }
+        locations = [];
+        locations.push(defLoc);
+    }
+}
 
-// var gLocations = loadFromStorage(LOCS_KEY);
-// _addDefaultLoc();
+function deleteLoc(locId){
+    let deleteIdx = locations.findIndex (loc => loc.id === locId);
+    locations.splice(deleteIdx,1);
+    _saveLocations();
+}
 
-// function addLocation(pos, name) {
-//     let location = {
-//         id: makeId(),
-//         pos: {
-//             lat: parseFloat(pos.lat).toFixed(4),
-//             lng: parseFloat(pos.lng).toFixed(4)
-//         },
-//         name: name
-//     }
-//     gLocations.push(location);
-//     _saveLocations();
-// }
+function getLocations() {
+    return locations;
+}
 
-// function _addDefaultLoc() {
-//     if (!gLocations) {
-//         let defLoc = {
-//             id: makeId(),
-//             pos: {
-//                 lat: DEFAULT_LAT,
-//                 lng: DEFAULT_LNG
-//             },
-//             name: 'EYLAT'
-//         }
-//         gLocations = [];
-//         gLocations.push(defLoc);
-//     }
-// }
+function getDefPos() {
+    return { lat: DEFAULT_LAT, lng: DEFAULT_LNG };
+}
 
-// function deleteLoc(locId){
-//     let deleteIdx = gLocations.findIndex (loc => loc.id === locId);
-//     gLocations.splice(deleteIdx,1);
-//     _saveLocations();
-// }
+function _saveLocations() {
+    storServie.saveToStorage(LOCS_KEY, locations);
+}
 
-// function getLocations() {
-//     return gLocations;
-// }
 
-// function getDefPos() {
-//     return { lat: DEFAULT_LAT, lng: DEFAULT_LNG };
-// }
-
-// function _saveLocations() {
-//     saveToStorage(LOCS_KEY, gLocations);
-// }
+function _makeId(length = 6) {
+    var txt = '';
+    var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    for (var i = 0; i < length; i++) {
+        txt += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return txt;
+}

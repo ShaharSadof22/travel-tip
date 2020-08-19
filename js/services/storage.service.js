@@ -1,4 +1,8 @@
-'use strict';
+export const storServie = {
+    saveToStorage,
+    loadFromStorage,
+    removeFromStorage
+}
 
 function saveToStorage(key, val) {
     var str= JSON.stringify(val);
@@ -14,3 +18,4 @@ function loadFromStorage(key) {
 function removeFromStorage(key) {
     localStorage.removeItem(key);
 }
+
