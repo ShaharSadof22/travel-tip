@@ -2,7 +2,7 @@
 export const mapService = {
     initMap,
     addMarker,
-    panTo
+    panTo,
 }
 
 var map;
@@ -25,7 +25,7 @@ function addMarker(loc) {
     var marker = new google.maps.Marker({
         position: loc,
         map: map,
-        title: 'Hello World!'
+        title: 'YOU ARE HERE!'
     });
     return marker;
 }
@@ -51,3 +51,55 @@ function _connectGoogleApi() {
 
 
 
+// 'use strict';
+// const DEFAULT_LAT = 29.55805;
+// const DEFAULT_LNG = 34.94821;
+// const LOCS_KEY = "LOCATIONS";
+// var gLocations = loadFromStorage(LOCS_KEY);
+// _addDefaultLoc();
+
+// function addLocation(pos, name) {
+//     let location = {
+//         id: makeId(),
+//         pos: {
+//             lat: parseFloat(pos.lat).toFixed(4),
+//             lng: parseFloat(pos.lng).toFixed(4)
+//         },
+//         name: name
+//     }
+//     gLocations.push(location);
+//     _saveLocations();
+// }
+
+// function _addDefaultLoc() {
+//     if (!gLocations) {
+//         let defLoc = {
+//             id: makeId(),
+//             pos: {
+//                 lat: DEFAULT_LAT,
+//                 lng: DEFAULT_LNG
+//             },
+//             name: 'EYLAT'
+//         }
+//         gLocations = [];
+//         gLocations.push(defLoc);
+//     }
+// }
+
+// function deleteLoc(locId){
+//     let deleteIdx = gLocations.findIndex (loc => loc.id === locId);
+//     gLocations.splice(deleteIdx,1);
+//     _saveLocations();
+// }
+
+// function getLocations() {
+//     return gLocations;
+// }
+
+// function getDefPos() {
+//     return { lat: DEFAULT_LAT, lng: DEFAULT_LNG };
+// }
+
+// function _saveLocations() {
+//     saveToStorage(LOCS_KEY, gLocations);
+// }

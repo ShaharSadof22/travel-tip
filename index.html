@@ -1,15 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Travel Tip</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <title>Travel-Tip</title>
 </head>
+
 <body>
-    <h1>Travel Tip</h1>
-    <div id="map" style="width: 100%; height: 400px;"></div>
-    <button class="btn">Click Me</button>
-    
+    <main class="map-main">
+        <h1 class="page-header"> Travel-Tip </h1>
+        <button class="myloc" onclick="getPosition()"><img src="img/myloc.png"></button>
+        <section class="map-container">
+            <div id="map">
+            </div>
+            <div class="locs-container">
+                <h3 class="locs-header">My Favorite locations</h3>
+                <table class="loc-table table table-bordered table-responsive-sm ">
+                    <thead>
+                        <tr>
+                            <th id="place">PLACE</th>
+                            <th id="loc">LOCATION</th>
+                            <th id="del"></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+
+        </section>
+    </main>
+    <div class="modal fade" id="dataModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 data-trans="modal-title" class="modal-title" id="modalLabel">Insert Your Location Name:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="input-modal price-update-txt" placeholder="Insert Location Name" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="onAddLocation()">Save
+                        changes</button>`
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <button class="btn">Click Me</button> -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGql0MyVMEQeH89LQj0TtpM66SoLpkAhw&callback=mapReady"></script>
+    <script src="lib/jquery.js"></script>
+    <script src="lib/popper/popper.min.js"></script>
+    <script src="lib/bootstrap/js/bootstrap.min.js"></script>
     <script type="module" src="js/main.js"></script>
 </body>
+
 </html>

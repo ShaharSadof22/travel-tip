@@ -20,10 +20,48 @@ window.onload = () => {
 
             console.log('User position is:', pos.coords);
         })
+        .then(addEventsListeners)
         .catch(err => {
             console.log('Cannot get user-position', err);
         })
 }
+
+function addEventsListeners(){
+    map.addListener('click', function (mapsMouseEvent) {
+        var pos = {
+            lat: mapsMouseEvent.latLng.lat(),
+            lng: mapsMouseEvent.latLng.lng()
+        };
+        var isDoInit = onMapClick(pos);
+        if (isDoInit) map.setCenter(pos.lat, pos.lng);
+
+    });
+
+    renderLocations();
+}
+
+
+function onMapClick(pos) {
+    $('.modal').modal('show');
+    gCurrentClick = pos;
+}
+
+function onAddLocation() {
+    var name = $('.input-modal').val();
+    $('.input-modal').val('');
+    if (name) {
+        addLocation(gCurrentClick, name);
+        renderLocations();
+        return true;
+    }
+    return false;
+}
+
+function onRemoveLoc(locId) {
+    deleteLoc(locId);
+    renderLocations();
+}
+
 
 document.querySelector('.btn').addEventListener('click', (ev) => {
     console.log('Aha!', ev.target);
