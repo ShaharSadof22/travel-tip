@@ -49,10 +49,12 @@ label {
     min-height: 500px;
     border: solid 4px darkblue;
 }
-
-.locs-container {
+.data-container{
     flex-basis: 48%;
     text-align: center;
+}
+.search-container{
+    margin-bottom: 10px;
 }
 
 .loc-table {
@@ -74,10 +76,16 @@ td {
     background-color: azure;
 }
 
-.myloc img {
+.my-loc img{ 
     width: 30px;
     height: 30px;
     z-index: 10;
+}
+.my-loc{ 
+    height: 46px;
+}
+.my-loc:hover{ 
+    background-color: #FFC107;
 }
 
 .loc-name:hover {
@@ -97,7 +105,7 @@ td {
         display: flex;
         flex-direction: column;
     }
-    
+
     #map {
         max-height: 500px;
     }

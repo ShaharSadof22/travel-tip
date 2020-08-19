@@ -12,22 +12,28 @@
 <body>
     <main class="map-main">
         <h1 class="page-header"> Travel-Tip2 </h1>
-        <button class="myloc"><img src="img/myloc.png"></button>
+        <button class="my-loc"><img src="img/myloc.png"></button>
         <section class="map-container">
             <div id="map">
             </div>
-            <div class="locs-container">
-                <h3 class="locs-header">My Favorite locations</h3>
-                <table class="loc-table table table-bordered table-responsive-sm ">
-                    <thead>
-                        <tr>
-                            <th id="place">PLACE</th>
-                            <th id="loc">LOCATION</th>
-                            <th id="del"></th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
+            <div class="data-container">
+                <div class="search-container">
+                    <input type="text" class="user-input" placeholder="Location">
+                    <button class="btn-go">Go</button>
+                </div>
+                <div class="locs-container">
+                    <h3 class="locs-header">My Favorite locations</h3>
+                    <table class="loc-table table table-bordered table-responsive-sm ">
+                        <thead>
+                            <tr>
+                                <th id="place">PLACE</th>
+                                <th id="loc">LOCATION</th>
+                                <th id="del"></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
 
         </section>
@@ -57,6 +63,7 @@
     <!-- <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGql0MyVMEQeH89LQj0TtpM66SoLpkAhw&callback=mapReady"></script> -->
     <script src="lib/axios.min.js"></script>
+    <script src="lib/sweetalert.js"></script>
     <script src="lib/jquery.js"></script>
     <script src="lib/popper/popper.min.js"></script>
     <script src="lib/bootstrap/js/bootstrap.min.js"></script>

@@ -3,6 +3,7 @@ console.log('Main!');
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 
+
 var map;
 var currPos;
 
@@ -12,17 +13,53 @@ window.onload = () => {
             addMarker({ lat: mapService.getDefPos().lat, lng: mapService.getDefPos().lng });
             panTo({ lat: mapService.getDefPos().lat, lng: mapService.getDefPos().lng });
         })
-        .catch(console.log('INIT MAP ERROR'));
-
-    locService.getPosition()
-        .then(pos => {
-
-            console.log('User position is:', pos.coords);
-        })
-        .catch(err => {
-            console.log('Cannot get user-position', err);
-        })
         .then(renderLocations())
+        .then(() => {
+            addListenerMyLocation()
+            addListenerSearchLocation()
+        })
+        .catch(console.log('INIT MAP ERROR'));
+}
+
+function addListenerSearchLocation() {
+    document.querySelector('.btn-go').onclick = () => {
+        const userSearch = document.querySelector('.user-input').value; // get user input
+        if (!userSearch) return;
+        locService.getLocationByName(userSearch)
+            .then(res => handleSearchGo(res))
+            .catch((err) => console.log('cannot get the location...'))
+    }
+}
+
+function handleSearchGo(res) {
+    const location = res.results[0].geometry.location;
+    changePosTo(location);
+}
+
+function addListenerMyLocation() {
+    document.querySelector('.my-loc').onclick = () => {
+
+        // ask  the user to allow position
+        Swal.fire({
+            title: '<strong>Hey!</strong>',
+            icon: 'info',
+            html: 'Are you allowing the app to get your location?',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: false,
+            confirmButtonText: 'Yes',
+            confirmButtonAriaLabel: 'Thumbs up, great!',
+            cancelButtonText: 'No',
+            cancelButtonAriaLabel: 'Thumbs down'
+        })
+            .then(res => {
+                if (res.isConfirmed) {
+                    locService.getPosition()
+                        .then(res => changePosTo({ lat: res.coords.latitude, lng: res.coords.longitude }))
+                        .catch(error => console.log(error));
+                }
+            })
+    }
 }
 
 
@@ -55,6 +92,13 @@ function addEventListeners() {
             onRemoveLoc(delLoc);
         })
     })
+
+}
+
+
+function changePosTo(loc) {
+    addMarker(loc);
+    panTo(loc.lat, loc.lng);
 }
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
@@ -76,7 +120,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                     lng: mapsMouseEvent.latLng.lng()
                 };
                 map.setCenter(currPos);
-                addMarker(currPos.lat, currPos.lng);
+                addMarker(currPos);
                 panTo(currPos.lat, currPos.lng);
                 onMapClick(currPos);
             })
@@ -113,9 +157,7 @@ function onAddLocation() {
     if (name) {
         mapService.addLocation(currPos, name);
         renderLocations();
-        return true;
     }
-    return false;
 }
 
 function onRemoveLoc(locId) {
