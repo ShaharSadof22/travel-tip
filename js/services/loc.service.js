@@ -1,7 +1,8 @@
 
 export const locService = {
     getLocs,
-    getPosition
+    getPosition,
+    getLocationByName
 }
 var locs = [{ lat: 11.22, lng: 22.11 }]
 
@@ -14,7 +15,6 @@ function getLocs() {
     });
 }
 
-
 function getPosition() {
 
     return new Promise((resolve, reject) => {
@@ -26,4 +26,7 @@ function getPosition() {
     })
 }
 
-
+function getLocationByName(userSearch) {
+    return axios.get(`https://maps.googleapis.com/maps/api/geocode/json?address=${userSearch}&key=AIzaSyDGql0MyVMEQeH89LQj0TtpM66SoLpkAhw&callback`)
+        .then(res => res.data)
+}

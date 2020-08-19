@@ -48,10 +48,17 @@ label {
     height: 500px;
     border: solid 4px darkblue;
 }
-.locs-container{
+.data-container{
     flex-basis: 48%;
     text-align: center;
 }
+.search-container{
+    margin-bottom: 10px;
+}
+/* .locs-container{
+    
+} */
+
 
 .loc-table{
     border: solid 4px darkblue !important;
