@@ -100,9 +100,8 @@ td {
     height: 30px;
 }
 
-@media Screen and(max-width: 500px) {
+@media Screen and (max-width: 700px) {
     .map-container {
-        display: flex;
         flex-direction: column;
     }
 

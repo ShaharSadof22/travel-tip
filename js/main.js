@@ -6,6 +6,7 @@ import { mapService } from './services/map.service.js'
 
 var map;
 var currPos;
+var isSetFromSerch = false;
 
 window.onload = () => {
     initMap(mapService.getDefPos().lat, mapService.getDefPos().lng)
@@ -33,6 +34,7 @@ function addListenerSearchLocation() {
 
 function handleSearchGo(res) {
     const location = res.results[0].geometry.location;
+    isSetFromSerch = true;
     changePosTo(location);
 }
 
@@ -55,7 +57,9 @@ function addListenerMyLocation() {
             .then(res => {
                 if (res.isConfirmed) {
                     locService.getPosition()
-                        .then(res => changePosTo({ lat: res.coords.latitude, lng: res.coords.longitude }))
+                        .then(res => {
+                            changePosTo({ lat: res.coords.latitude, lng: res.coords.longitude })
+                        })
                         .catch(error => console.log(error));
                 }
             })
@@ -97,21 +101,23 @@ function addEventListeners() {
 
 
 function changePosTo(loc) {
+    currPos = loc;
     addMarker(loc);
     panTo(loc.lat, loc.lng);
+    onAddLocation();
 }
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
-    console.log('InitMap');
     return mapService.connectGoogleApi()
         .then(() => {
-            console.log('google available');
-            map = new google.maps.Map(
+           return map = new google.maps.Map(
                 document.querySelector('#map'), {
                 center: { lat, lng },
                 zoom: 15
             })
-            console.log('Map!', map);
+        }).then((map)=>{
+            addMarker({lat:map.center.lat(),lng: map.center.lng()});
+            panTo(map.center.lat(), map.center.lng());
         })
         .then(() => {
             map.addListener('click', function (mapsMouseEvent) {
@@ -144,16 +150,19 @@ function panTo(lat, lng) {
 locService.getLocs()
     .then(locs => console.log('locs', locs))
 
-
-
 function onMapClick() {
     $('.modal').modal('show');
 
 }
 
 function onAddLocation() {
-    var name = $('.input-modal').val();
-    $('.input-modal').val('');
+    if (!isSetFromSerch) {
+        var name = $('.input-modal').val();
+        $('.input-modal').val('');
+    } else {
+        name = document.querySelector('.user-input').value;
+        isSetFromSerch = false;
+    }
     if (name) {
         mapService.addLocation(currPos, name);
         renderLocations();
