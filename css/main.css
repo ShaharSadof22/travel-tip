@@ -5,32 +5,6 @@
     background-color: skyblue;
 }
 
-.astro-container{
-    border: solid 5px black;
-    margin-top: 30px;
-    text-align: center;
-}
-
-header {
-    background-color: burlywood;
-    text-align: center;
-    height: 10vh;
-}
-
-.index-header{
-    text-align: center;
-}
-
-footer {
-    text-align: center;
-    background-color: cadetblue;
-}
-
-.btn-container{
-    display: flex;
-    justify-content: space-around;
-}
-
 .main-btn{
     width: 40vw;
     height: 30vh;
@@ -63,23 +37,6 @@ main {
     display: inline;
     position: relative;
     margin: 0 !important;
-}
-
-.form-container {
-    width: 50%;
-    height: 100%;
-    padding: 20px;
-    background-color: aquamarine;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    border: solid 5px black;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.form-control {
-    width: 80%
 }
 
 label {

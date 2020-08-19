@@ -1,38 +1,20 @@
 
 export const mapService = {
-    initMap,
-    addMarker,
-    panTo,
+    connectGoogleApi,
+    getCurrPos
 }
 
-var map;
+const DEFAULT_LAT = 29.55805;
+const DEFAULT_LNG = 34.94821;
+const LOCS_KEY = "LOCATIONS";
 
-export function initMap(lat = 32.0749831, lng = 34.9120554) {
-    return _connectGoogleApi()
-        .then(() => {
-            map = new google.maps.Map(
-                document.querySelector('#map'), {
-                center: { lat, lng },
-                zoom: 15
-            })
-        })
+
+
+function getCurrPos() {
+    return gCurrPoss;
 }
 
-function addMarker(loc) {
-    var marker = new google.maps.Marker({
-        position: loc,
-        map: map,
-        title: 'YOU ARE HERE!'
-    });
-    return marker;
-}
-
-function panTo(lat, lng) {
-    var laLatLng = new google.maps.LatLng(lat, lng);
-    map.panTo(laLatLng);
-}
-
-function _connectGoogleApi() {
+function connectGoogleApi() {
     if (window.google) return Promise.resolve()
     const API_KEY = 'AIzaSyDGql0MyVMEQeH89LQj0TtpM66SoLpkAhw&callback'; //TODO: Enter your API Key
     var elGoogleApi = document.createElement('script');
@@ -49,9 +31,7 @@ function _connectGoogleApi() {
 
 
 // 'use strict';
-// const DEFAULT_LAT = 29.55805;
-// const DEFAULT_LNG = 34.94821;
-// const LOCS_KEY = "LOCATIONS";
+
 // var gLocations = loadFromStorage(LOCS_KEY);
 // _addDefaultLoc();
 
