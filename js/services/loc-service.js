@@ -1,10 +1,12 @@
+
 export const locService = {
-    getLocs: getLocs,
-    getPosition: getPosition
+    getLocs,
+    getPosition
 }
 var locs = [{ lat: 11.22, lng: 22.11 }]
 
 function getLocs() {
+
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(locs);
@@ -14,10 +16,14 @@ function getLocs() {
 
 
 function getPosition() {
-    console.log('Getting Pos');
 
     return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject)
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(resolve)
+        } else {
+            reject('addMarker on MAP ERROR');
+        }
     })
 }
+
 
